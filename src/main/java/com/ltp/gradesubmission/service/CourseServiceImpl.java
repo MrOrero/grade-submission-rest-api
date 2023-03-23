@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
-import com.ltp.gradesubmission.exception.CourseNotFoundException;
+import com.ltp.gradesubmission.exception.EntityNotFoundException;
 import com.ltp.gradesubmission.repository.CourseRepository;
 import com.ltp.gradesubmission.repository.StudentRepository;
 
@@ -61,7 +61,7 @@ public class CourseServiceImpl implements CourseService {
         if (entity.isPresent())
             return entity.get();
         else
-            throw new CourseNotFoundException(id);
+            throw new EntityNotFoundException(id, Course.class);
     }
 
 }

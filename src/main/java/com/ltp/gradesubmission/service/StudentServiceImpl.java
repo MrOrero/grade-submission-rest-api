@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
-import com.ltp.gradesubmission.exception.StudentNotFoundException;
+import com.ltp.gradesubmission.exception.EntityNotFoundException;
 import com.ltp.gradesubmission.repository.StudentRepository;
 
 import lombok.AllArgsConstructor;
@@ -50,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
         if (entity.isPresent())
             return entity.get();
         else
-            throw new StudentNotFoundException(id);
+            throw new EntityNotFoundException(id, Student.class);
     }
 
 }
