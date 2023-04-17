@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
@@ -44,6 +47,15 @@ public class Student {
     @Past(message = "Birth date must be in the past")
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
+
+    @NonNull
+    @NotBlank(message = "Department cannot be blank")
+    @Column(name = "department", nullable = false)
+    private String department;
+
+    @Column(name = "gender", nullable = false)
+    @Enumerated(EnumType.STRING) // specify how the enum should be persisted in the database
+    private Gender gender;
 
     @JsonIgnore
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)

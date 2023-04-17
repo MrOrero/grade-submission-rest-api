@@ -2,7 +2,6 @@ package com.ltp.gradesubmission.security.filter;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
