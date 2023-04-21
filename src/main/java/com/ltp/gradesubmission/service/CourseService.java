@@ -9,13 +9,15 @@ import com.ltp.gradesubmission.entity.Student;
 public interface CourseService {
     Course getCourse(Long id);
 
+    Course getCourseByCode(String courseCode);
+
     Course saveCourse(Course course);
 
     void deleteCourse(Long id);
 
     List<Course> getCourses();
 
-    Course addStudentToCourse(Long studentId, Long courseId);
+    Course addStudentToCourse(Long studentId, String courseCode);
 
     Set<Student> getEnrolledStudents(Long id);
 

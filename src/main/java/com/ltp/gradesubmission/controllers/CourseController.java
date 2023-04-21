@@ -1,6 +1,7 @@
 package com.ltp.gradesubmission.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -50,9 +51,11 @@ public class CourseController {
         return new ResponseEntity<>(courseService.getCourses(), HttpStatus.OK);
     }
 
-    @PutMapping("/{courseId}/student/{studentId}")
-    public ResponseEntity<Course> enrollStudentToCourse(@PathVariable Long courseId, @PathVariable Long studentId) {
-        return new ResponseEntity<>(courseService.addStudentToCourse(studentId, courseId), HttpStatus.OK);
+    @PutMapping("/student/{studentId}")
+    public ResponseEntity<Course> enrollStudentToCourse(@RequestBody Map<String, String> requestBody,
+            @PathVariable Long studentId) {
+        return new ResponseEntity<>(courseService.addStudentToCourse(studentId, requestBody.get("code")),
+                HttpStatus.OK);
     }
 
     @GetMapping("/{id}/students")

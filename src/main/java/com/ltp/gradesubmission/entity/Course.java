@@ -61,4 +61,13 @@ public class Course {
     @JoinTable(name = "course_student", joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
     private Set<Student> students;
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id='" + id + '\'' +
+                "code='" + code + '\'' +
+                ", subject='" + subject + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
