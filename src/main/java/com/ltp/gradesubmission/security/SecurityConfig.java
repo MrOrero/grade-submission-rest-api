@@ -42,10 +42,6 @@ public class SecurityConfig {
                 // .and()
                 .csrf().disable()
                 .authorizeRequests()
-                // .antMatchers("/h2/**").permitAll() // New Line: allows us to access the h2
-                // console without the need to
-                // authenticate. ' ** ' instead of ' * ' because multiple path levels
-                // will follow /h2.
                 .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll()
                 .anyRequest().authenticated()
                 .and()

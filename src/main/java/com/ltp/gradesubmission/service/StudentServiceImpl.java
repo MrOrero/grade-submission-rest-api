@@ -1,11 +1,16 @@
 package com.ltp.gradesubmission.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.ltp.gradesubmission.dtos.StudentDTO;
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.exception.EntityNotFoundException;
@@ -36,8 +41,24 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getStudents() {
-        return (List<Student>) studentRepository.findAll();
+    public StudentDTO getStudents(int pageNumber, int sizePerPage) {
+        // Create a PageRequest object with the pageNumber, sizePerPage, and sorting if
+        // needed
+        PageRequest pageRequest = PageRequest.of(pageNumber, sizePerPage);
+
+        // Fetch the page of students using the pageRequest
+        Page<Student> studentsPage = studentRepository.findAll(pageRequest);
+
+        // Extract the list of students from the page
+        List<Student> students = studentsPage.getContent();
+
+        long totalStudents = studentsPage.getTotalElements();
+
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setStudents(students);
+        studentDTO.setTotalStudents(totalStudents);
+
+        return studentDTO;
     }
 
     @Override

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ltp.gradesubmission.dtos.StudentDTO;
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.service.StudentService;
@@ -45,8 +47,11 @@ public class StudentController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Student>> getStudents() {
-        return new ResponseEntity<>(studentService.getStudents(), HttpStatus.OK);
+    public ResponseEntity<StudentDTO> getStudents(
+            @RequestParam("page") int pageNumber,
+            @RequestParam("size") int pageSize) {
+        StudentDTO students = studentService.getStudents(pageNumber - 1, pageSize);
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/courses")
