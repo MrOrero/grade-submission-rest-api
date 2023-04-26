@@ -1,8 +1,8 @@
 package com.ltp.gradesubmission.service;
 
-import java.util.List;
 import java.util.Set;
 
+import com.ltp.gradesubmission.dtos.CourseDTO;
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
 
@@ -15,7 +15,7 @@ public interface CourseService {
 
     void deleteCourse(Long id);
 
-    List<Course> getCourses();
+    CourseDTO getCourses(int pageNumber, int sizePerPage);
 
     Course addStudentToCourse(Long studentId, String courseCode);
 

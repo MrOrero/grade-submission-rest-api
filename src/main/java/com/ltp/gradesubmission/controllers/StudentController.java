@@ -1,6 +1,5 @@
 package com.ltp.gradesubmission.controllers;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;

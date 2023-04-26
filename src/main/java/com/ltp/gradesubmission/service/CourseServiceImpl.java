@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.ltp.gradesubmission.dtos.CourseDTO;
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.exception.EntityNotFoundException;
@@ -44,8 +47,22 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getCourses() {
-        return (List<Course>) courseRepository.findAll();
+    public CourseDTO getCourses(int pageNumber, int sizePerPage) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, sizePerPage);
+
+        // Fetch the page of students using the pageRequest
+        Page<Course> coursesPage = courseRepository.findAll(pageRequest);
+
+        // Extract the list of students from the page
+        List<Course> courses = coursesPage.getContent();
+
+        long totalCourses = coursesPage.getTotalElements();
+
+        CourseDTO courseDTO = new CourseDTO();
+        courseDTO.setCourses(courses);
+        courseDTO.setTotalCourses(totalCourses);
+
+        return courseDTO;
     }
 
     @Override

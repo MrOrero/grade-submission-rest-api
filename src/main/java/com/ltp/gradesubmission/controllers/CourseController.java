@@ -1,6 +1,5 @@
 package com.ltp.gradesubmission.controllers;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ltp.gradesubmission.dtos.CourseDTO;
 import com.ltp.gradesubmission.entity.Course;
 import com.ltp.gradesubmission.entity.Student;
 import com.ltp.gradesubmission.service.CourseService;
@@ -47,8 +48,10 @@ public class CourseController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Course>> getCourses() {
-        return new ResponseEntity<>(courseService.getCourses(), HttpStatus.OK);
+    public ResponseEntity<CourseDTO> getCourses(@RequestParam("page") int pageNumber,
+            @RequestParam("size") int pageSize) {
+        CourseDTO courses = courseService.getCourses(pageNumber - 1, pageSize);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
     @PutMapping("/student/{studentId}")
