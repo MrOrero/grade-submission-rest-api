@@ -1,18 +1,36 @@
-version: '3.3'
+version: "3.8"
 services:
-  db:
-    image: mysql/mysql-server:8.0
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
-    ports:
-      - '3306:3306'
-    expose:
-      - '3306'
-    volumes:
-      - my-db:/var/lib/mysql
+    server:
+        build: .
+        ports:
+            - "8080:8080"
+        depends_on:
+            - mysqldb
+        restart: on-failure
+        networks:
+            - grade-application-network
+        environment:
+            MYSQL_HOST: "mysqldb"
+            MYSQL_PORT: "3306"
+            MYSQL_USER: "user"
+            MYSQL_PASSWORD: "password"
+
+    mysqldb:
+        container_name: mysqldb
+        image: mysql
+        environment:
+            MYSQL_ALLOW_PUBLIC_KEY_RETRIEVAL: "true"
+            MYSQL_DATABASE: "db"
+            MYSQL_USER: "user"
+            MYSQL_PASSWORD: "password"
+            MYSQL_ROOT_PASSWORD: "root"
+        ports:
+            - 3307:3306
+        volumes:
+            - my-db:/var/lib/mysql
+        networks:
+            - grade-application-network
 volumes:
-  my-db:
+    my-db:
+networks:
+    grade-application-network:

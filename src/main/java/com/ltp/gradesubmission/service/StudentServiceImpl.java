@@ -40,14 +40,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDTO getStudents(int pageNumber, int sizePerPage) {
-        // Create a PageRequest object with the pageNumber, sizePerPage, and sorting if
-        // needed
         PageRequest pageRequest = PageRequest.of(pageNumber, sizePerPage);
 
-        // Fetch the page of students using the pageRequest
         Page<Student> studentsPage = studentRepository.findAll(pageRequest);
 
-        // Extract the list of students from the page
         List<Student> students = studentsPage.getContent();
 
         long totalStudents = studentsPage.getTotalElements();
